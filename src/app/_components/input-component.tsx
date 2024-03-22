@@ -2,7 +2,8 @@ interface InputComponentProps {
   label: string;
   type: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
+  placeholder?: string;
+  value: string;
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
@@ -10,14 +11,15 @@ const InputComponent: React.FC<InputComponentProps> = ({
   type,
   onChange,
   placeholder,
+  value,
 }) => {
   return (
     <div className="flex flex-col">
-      <label className="xl:text-dark-text p-1 font-medium">{label}</label>
+      <label className="p-1 font-medium">{label}</label>
       <input
         type={type}
         onChange={onChange}
-        className="text-dark-text w-full rounded border p-2 focus:outline-none md:text-xl"
+        className="w-full rounded bg-violet-50 p-2 font-medium text-zinc-950 focus:outline-none md:text-xl"
         placeholder={placeholder}
       />
     </div>

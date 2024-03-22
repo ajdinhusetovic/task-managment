@@ -37,7 +37,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`w-full ${nav ? "" : "h-[100px] md:h-[150px]"} border-b`}>
+    <nav
+      className={`w-full ${nav ? "" : "h-[100px] md:h-[150px]"} border border-l-0 border-r-0 border-t-0 border-b-blue-300`}
+    >
       <div className="mx-auto flex h-full w-11/12 justify-between">
         <div
           className={`flex h-full items-center justify-between ${
@@ -48,7 +50,7 @@ const Navbar = () => {
             ""
           ) : (
             <h1 className="items-self-center cursor-pointer text-3xl font-medium lg:text-5xl">
-              Task<span className="text-red-500">Managment</span>
+              Task<span className="text-yellow-500">Managment</span>
             </h1>
           )}
           <div
@@ -64,7 +66,7 @@ const Navbar = () => {
           <ul className="flex h-screen w-full flex-col items-center justify-center gap-2 md:hidden">
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
                 href="/"
               >
                 Home
@@ -72,7 +74,7 @@ const Navbar = () => {
             </li>
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                 href="/recipes/search"
               >
                 Create task
@@ -80,7 +82,7 @@ const Navbar = () => {
             </li>
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                 href="/recipes/create-recipe/"
               >
                 Add Recipe
@@ -100,7 +102,7 @@ const Navbar = () => {
         <ul className="hidden items-center gap-5 md:flex">
           <li className="group transition-all duration-300 ease-in-out">
             <Link
-              className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
+              className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
               href="/"
             >
               Home
@@ -109,7 +111,7 @@ const Navbar = () => {
 
           <li className="group transition-all duration-300 ease-in-out">
             <Link
-              className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+              className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
               href="/create-task/"
             >
               Create task
@@ -118,7 +120,17 @@ const Navbar = () => {
           {user !== undefined && (
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                href="/completed-tasks"
+              >
+                Completed
+              </Link>
+            </li>
+          )}
+          {user !== undefined && (
+            <li className="group transition-all duration-300 ease-in-out">
+              <Link
+                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                 href={`/profiles/${user?.id}`}
               >
                 Profile
@@ -131,7 +143,12 @@ const Navbar = () => {
             </li>
           ) : (
             <li className="group transition-all duration-300 ease-in-out">
-              <button onClick={() => void signOut()}>Log Out</button>
+              <button
+                className="rounded-md bg-yellow-500 p-2 font-medium"
+                onClick={() => void signOut()}
+              >
+                Log Out
+              </button>
             </li>
           )}
         </ul>

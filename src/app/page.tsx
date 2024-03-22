@@ -3,47 +3,37 @@
 import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
 import TaskCard from "./_components/task-card";
+import { useState } from "react";
+import NotLoggedIn from "./_components/not-logged-in";
 
 export default function Home() {
   const tasks = api.task.all.useQuery();
 
   const session = useSession();
 
-  if (session.status !== "authenticated") return;
+  if (session.status !== "authenticated") {
+    return <NotLoggedIn />;
+  }
 
   if (tasks.isLoading) return <p>Loading...</p>;
 
-  if (!tasks) return <p>No tasks found.</p>;
-
   return (
     <>
-      <header>This is the main page</header>
-      <div className="mx-auto mt-8 flex w-11/12 flex-col gap-4">
-        {tasks.data?.map((task, index) => (
-          <div key={index}>
-            <TaskCard task={task} />
-          </div>
-        ))}
-      </div>
+      {tasks.data && tasks.data.length > 0 ? (
+        <div className="mx-auto my-8 flex w-11/12 flex-col gap-4 md:flex-row">
+          {tasks.data.map((task, index) => (
+            <div key={index} className="md:w-1/2">
+              <TaskCard task={task} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex h-[300px] items-center justify-center">
+          <h1 className="rounded bg-orange-400 p-8 text-center text-4xl font-medium">
+            There currently no tasks available.
+          </h1>
+        </div>
+      )}
     </>
   );
 }
-
-// async function CrudShowcase() {
-//   const session = await getServerAuthSession();
-//   if (!session?.user) return null;
-
-//   const latestPost = await api.post.getLatest();
-
-//   return (
-//     <div className="w-full max-w-xs">
-//       {latestPost ? (
-//         <p className="truncate">Your most recent post: {latestPost.name}</p>
-//       ) : (
-//         <p>You have no posts yet.</p>
-//       )}
-
-//       <CreatePost />
-//     </div>
-//   );
-// }

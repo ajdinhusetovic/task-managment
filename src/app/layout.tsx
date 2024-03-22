@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import { Toaster } from "../components/ui/toaster";
 
 import { Inter } from "next/font/google";
 
@@ -24,11 +25,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body
+        className={`font-sans ${inter.variable} bg-violet-50 text-zinc-950`}
+      >
         <AuthProvider>
+          <Navbar />
           <div className="container mx-auto">
-            <Navbar />
             <TRPCReactProvider>{children}</TRPCReactProvider>
+            <Toaster />
           </div>
         </AuthProvider>
       </body>
