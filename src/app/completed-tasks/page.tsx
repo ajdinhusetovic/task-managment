@@ -13,7 +13,7 @@ const page = () => {
   }
 
   return (
-    <div className="mt-12 grid grid-cols-3 gap-3">
+    <div className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
       {tasks.data && tasks.data.length > 0 ? (
         tasks.data?.map((task: Task, index: number) => (
           <TaskCard task={task} key={index} />
