@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </div>
       )}
-      <div className="mb-12 mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-3">
+      <div className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
         {sortedTasks && sortedTasks.length > 0 ? (
           sortedTasks.map((task: Task, index) => (
             <TaskCard key={index} task={task} />

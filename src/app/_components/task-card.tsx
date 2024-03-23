@@ -99,7 +99,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 
   return (
     <div
-      className={`flex flex-col justify-between rounded bg-orange-300 py-4 ${patrickHand.className}`}
+      className={`flex w-full flex-col justify-between rounded bg-orange-300 py-4 ${patrickHand.className}`}
     >
       <div className="mx-auto w-11/12">
         <div className="flex items-center gap-1">

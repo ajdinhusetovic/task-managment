@@ -26,7 +26,10 @@ const Profile = () => {
       <div>
         <p className="mt-4 text-zinc-700">{user.email}</p>
         <h1 className="mt-2 text-4xl">{user.name}</h1>
-        <p>Tasks completed: {user.completedTasks}</p>
+        <p className="text-center text-lg">
+          Tasks completed:{" "}
+          <span className="text-orange-500">{user.completedTasks}</span>
+        </p>
       </div>
     </div>
   );
