@@ -44,20 +44,23 @@ const Navbar = () => {
             )}
           </ul>
         </div>
-        <a className="btn btn-ghost text-lg md:text-4xl" href="/">
+        <a
+          className="btn btn-ghost text-lg hover:bg-orange-200 md:text-4xl"
+          href="/"
+        >
           Task<span className="text-orange-500">Managment</span>
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
+          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-200">
             <Link href="/">Home</Link>
           </li>
-          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
+          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-200">
             <Link href="/create-task">Create Task</Link>
           </li>
           {user !== undefined && (
-            <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
+            <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-200">
               <Link href={`/profiles/${user?.id}`}>Profile</Link>
             </li>
           )}
