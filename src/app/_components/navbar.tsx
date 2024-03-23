@@ -44,7 +44,7 @@ const Navbar = () => {
             )}
             {user !== undefined && (
               <li className="text-orange-500">
-                <Link href={`/profiles/${user?.id}`}>Profile</Link>
+                <Link href={`/profile/${user?.id}`}>Profile</Link>
               </li>
             )}
           </ul>
