@@ -107,11 +107,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           <p className="p-1 text-lg font-medium">{task.priority} PRIORITY</p>
         </div>
         <div>
-          <h1 className="text-4xl font-semibold">{task.title}</h1>
+          <h1 className="pt-2 text-4xl font-semibold">{task.title}</h1>
           <hr className="border border-t-0 border-b-gray-700" />
         </div>
         <div className="mt-2">
-          <p className="break-words text-2xl">{task.description}</p>
+          <p className="break-words pt-2 text-2xl">{task.description}</p>
         </div>
       </div>
       <div className="mx-auto flex w-11/12 items-center pt-6">

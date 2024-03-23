@@ -1,14 +1,17 @@
 import "~/styles/globals.css";
 import { Toaster } from "../components/ui/toaster";
-import { Inter } from "next/font/google";
+import { Inter, Kanit, Montserrat } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import AuthProvider from "./_components/auth-provider";
 import Navbar from "./_components/navbar";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// });
+
+// const montserrat = Montserrat({ weight: "400", subsets: ["latin"] });
+const kanit = Kanit({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
   title: "Create T3 App",
@@ -24,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-screen">
       <body
-        className={`font-sans ${inter.variable} h-screen bg-violet-50 text-zinc-950`}
+        className={` ${kanit.className} h-screen bg-violet-50 text-zinc-950`}
       >
         <AuthProvider>
           <Navbar />

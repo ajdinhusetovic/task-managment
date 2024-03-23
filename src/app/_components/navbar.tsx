@@ -8,7 +8,7 @@ const Navbar = () => {
   const user = session.data?.user;
 
   return (
-    <div className="navbar h-[100px] bg-orange-300">
+    <div className="navbar h-[100px] bg-orange-300 text-lg">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -31,7 +31,7 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 bg-violet-50 p-2 shadow"
           >
-            <li className="text-orange-500">
+            <li className="text-2xl text-orange-500">
               <Link href="/">Home</Link>
             </li>
             <li className="text-orange-500">
@@ -44,20 +44,20 @@ const Navbar = () => {
             )}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl" href="/">
+        <a className="btn btn-ghost text-4xl" href="/">
           Task<span className="text-orange-500">Managment</span>
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li className="rounded font-medium text-zinc-950 hover:bg-orange-400">
+          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
             <Link href="/">Home</Link>
           </li>
-          <li className="rounded font-medium text-zinc-950 hover:bg-orange-400">
+          <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
             <Link href="/create-task">Create Task</Link>
           </li>
           {user !== undefined && (
-            <li className="rounded font-medium text-zinc-950 hover:bg-orange-400">
+            <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-400">
               <Link href={`/profiles/${user?.id}`}>Profile</Link>
             </li>
           )}
