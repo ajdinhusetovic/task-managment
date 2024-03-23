@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { IoClose } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -59,14 +61,14 @@ const Navbar = () => {
             }`}
             onClick={handleNav}
           >
-            {nav ? <h1>Close</h1> : <h1>Open</h1>}
+            {nav ? <IoClose size={30} /> : <RxHamburgerMenu size={25} />}
           </div>
         </div>
         {nav && (
           <ul className="flex h-screen w-full flex-col items-center justify-center gap-2 md:hidden">
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
                 href="/"
               >
                 Home
@@ -74,35 +76,53 @@ const Navbar = () => {
             </li>
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
-                href="/recipes/search"
+                className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                href="/create-task"
               >
                 Create task
               </Link>
             </li>
-            <li className="group transition-all duration-300 ease-in-out">
-              <Link
-                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
-                href="/recipes/create-recipe/"
-              >
-                Add Recipe
-              </Link>
-            </li>
-            <li className="group transition-all duration-300 ease-in-out">
-              <Link
-                className="bg-gradient-to-r from-violet-500 to-violet-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
-                href="/recipes/saved/"
-              >
-                Saved
-              </Link>
-            </li>
+            {user !== undefined && (
+              <li className="group transition-all duration-300 ease-in-out">
+                <Link
+                  className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                  href="/completed-tasks"
+                >
+                  Completed
+                </Link>
+              </li>
+            )}
+            {user !== undefined && (
+              <li className="group transition-all duration-300 ease-in-out">
+                <Link
+                  className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                  href={`/profiles/${user?.id}`}
+                >
+                  Profile
+                </Link>
+              </li>
+            )}
+            {user === undefined ? (
+              <li className="group transition-all duration-300 ease-in-out">
+                <button onClick={() => void signIn()}>Log In</button>
+              </li>
+            ) : (
+              <li className="group transition-all duration-300 ease-in-out">
+                <button
+                  className="rounded-md bg-yellow-500 p-2 font-medium"
+                  onClick={() => void signOut()}
+                >
+                  Log Out
+                </button>
+              </li>
+            )}
           </ul>
         )}
 
         <ul className="hidden items-center gap-5 md:flex">
           <li className="group transition-all duration-300 ease-in-out">
             <Link
-              className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
+              className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
               href="/"
             >
               Home
@@ -111,7 +131,7 @@ const Navbar = () => {
 
           <li className="group transition-all duration-300 ease-in-out">
             <Link
-              className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+              className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
               href="/create-task/"
             >
               Create task
@@ -120,7 +140,7 @@ const Navbar = () => {
           {user !== undefined && (
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                 href="/completed-tasks"
               >
                 Completed
@@ -130,7 +150,7 @@ const Navbar = () => {
           {user !== undefined && (
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-blue-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                 href={`/profiles/${user?.id}`}
               >
                 Profile
@@ -139,7 +159,12 @@ const Navbar = () => {
           )}
           {user === undefined ? (
             <li className="group transition-all duration-300 ease-in-out">
-              <button onClick={() => void signIn()}>Log In</button>
+              <button
+                className="rounded-md bg-yellow-500 p-2 font-medium"
+                onClick={() => void signIn()}
+              >
+                Log In
+              </button>
             </li>
           ) : (
             <li className="group transition-all duration-300 ease-in-out">

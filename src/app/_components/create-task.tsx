@@ -15,8 +15,8 @@ import NotLoggedIn from "./not-logged-in";
 
 const NewTaskForm = () => {
   const session = useSession();
+
   if (session.status !== "authenticated") {
-    console.log("not logged in ");
     return <NotLoggedIn />;
   }
 
@@ -39,10 +39,6 @@ function Form() {
       setTextAreaValue("");
     },
   });
-
-  // if (session.status !== "authenticated") {
-
-  // }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
