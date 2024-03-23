@@ -3,7 +3,7 @@
 import React from "react";
 import { api } from "~/trpc/react";
 import TaskCard from "../_components/task-card";
-import { Task } from "@prisma/client";
+import { type Task } from "@prisma/client";
 
 const page = () => {
   const tasks = api.task.unfinishedTasks.useQuery();
