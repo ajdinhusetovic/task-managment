@@ -12,10 +12,11 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import InputComponent from "./input-component";
-import { Architects_Daughter } from "next/font/google";
+import { Patrick_Hand } from "next/font/google";
+
 import { type Task } from "@prisma/client";
 
-const architectsDaughter = Architects_Daughter({
+const patrickHand = Patrick_Hand({
   weight: "400",
   subsets: ["latin"],
 });
@@ -98,7 +99,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 
   return (
     <div
-      className={`flex flex-col justify-between rounded bg-orange-300 py-4 ${architectsDaughter.className}`}
+      className={`flex flex-col justify-between rounded bg-orange-300 py-4 ${patrickHand.className}`}
     >
       <div className="mx-auto w-11/12">
         <div className="flex items-center gap-1">
