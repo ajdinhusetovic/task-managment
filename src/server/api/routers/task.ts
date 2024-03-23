@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { type Task } from "@prisma/client";
+import { User, type Task } from "@prisma/client";
 
 enum Priority {
   HIGH = "HIGH",
@@ -29,6 +29,7 @@ const updateSchema = z.object({
 });
 
 const taskIdSchema = z.string();
+const userIdSchema = z.string();
 
 const markAsDoneSchema = z.object({
   id: z.string(),
@@ -108,11 +109,31 @@ export const taskRouter = createTRPCRouter({
     .mutation(async ({ ctx, input: { id, isDone } }) => {
       const updatedTask = await ctx.db.task.update({
         where: { id },
-        data: {
-          isDone,
-        },
+        data: { isDone },
       });
 
-      return updatedTask;
+      if (updatedTask) {
+        await ctx.db.user.update({
+          where: { id: updatedTask.userId },
+          data: {
+            completedTasks: {
+              increment: 1,
+            },
+          },
+        });
+
+        return updatedTask;
+      }
+
+      return null;
+    }),
+
+  getUser: protectedProcedure
+    .input(userIdSchema)
+    .query(async ({ ctx, input }) => {
+      const user: User | null = await ctx.db.user.findUnique({
+        where: { id: input },
+      });
+      return user;
     }),
 });
