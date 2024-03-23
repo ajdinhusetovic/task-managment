@@ -68,7 +68,7 @@ const Navbar = () => {
           <ul className="flex h-screen w-full flex-col items-center justify-center gap-2 md:hidden">
             <li className="group transition-all duration-300 ease-in-out">
               <Link
-                className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
+                className="bg-gradient-to-r from-orange-500 to-blue-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-300 ease-out group-hover:bg-[length:100%_2px]"
                 href="/"
               >
                 Home
@@ -85,7 +85,7 @@ const Navbar = () => {
             {user !== undefined && (
               <li className="group transition-all duration-300 ease-in-out">
                 <Link
-                  className="bg-gradient-to-r from-orange-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
+                  className="bg-gradient-to-r from-blue-500 to-orange-500 bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-all duration-500 ease-out group-hover:bg-[length:100%_2px]"
                   href="/completed-tasks"
                 >
                   Completed
@@ -104,7 +104,12 @@ const Navbar = () => {
             )}
             {user === undefined ? (
               <li className="group transition-all duration-300 ease-in-out">
-                <button onClick={() => void signIn()}>Log In</button>
+                <button
+                  className="rounded-md bg-yellow-500 p-2 font-medium"
+                  onClick={() => void signIn()}
+                >
+                  Log In
+                </button>
               </li>
             ) : (
               <li className="group transition-all duration-300 ease-in-out">

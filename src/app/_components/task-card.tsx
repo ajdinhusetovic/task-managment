@@ -1,15 +1,23 @@
-import React, { FormEvent, useState } from "react";
+import React, { type FormEvent, useState } from "react";
 import { api } from "~/trpc/react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { FaPen } from "react-icons/fa";
 import InputComponent from "./input-component";
+import { Architects_Daughter } from "next/font/google";
+
+const architectsDaughter = Architects_Daughter({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export interface Task {
   id: string;
@@ -27,7 +35,6 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
-  const [isTaskDone, setIsTaskDone] = useState(false);
 
   let priorityColor = "";
 
@@ -101,41 +108,47 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded bg-yellow-500 p-4 text-violet-50">
-      <div>
-        <h1 className="text-2xl font-medium">{task.title}</h1>
+    <div
+      className={`flex flex-col gap-2 rounded bg-orange-200 px-4 pb-4 text-zinc-950 ${architectsDaughter.className}`}
+    >
+      <div
+        className={`mt-2 flex items-center gap-2 bg-transparent text-center`}
+      >
+        <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
+        <p className="p-1 font-medium">{task.priority} PRIORITY</p>
       </div>
-      <div>{task.description}</div>
-      <div className={`${priorityColor} mt-2 w-[80px] rounded-md text-center`}>
-        <p className="p-1 font-medium">{task.priority}</p>
+      <div>
+        <h1 className="mt-2 text-4xl font-semibold">{task.title}</h1>
+      </div>
+      <div>
+        <p className="text-2xl">{task.description}</p>
       </div>
       <div className="mt-6 flex">
         {task.isDone ? (
           ""
         ) : (
-          <button
-            className="ml-auto rounded bg-violet-50 p-2 text-zinc-950 hover:bg-violet-100"
+          <FaRegCheckCircle
             onClick={handleMarkAsDone}
-          >
-            Done
-          </button>
+            size={30}
+            className="ml-auto cursor-pointer text-green-700 hover:scale-125"
+          />
         )}
-        <button
+        <FaRegTimesCircle
+          size={30}
+          className={`${task.isDone ? "ml-auto" : "ml-2"} cursor-pointer text-red-500 hover:scale-125`}
           onClick={() => {
             handleDelete(task.id);
           }}
-          className={`${task.isDone ? "ml-auto" : "ml-2"} rounded bg-violet-50 p-2 text-zinc-950 hover:bg-violet-100 `}
-        >
-          Remove
-        </button>
+        />
         {task.isDone ? (
           ""
         ) : (
           <Dialog>
             <DialogTrigger>
-              <button className="ml-2 rounded bg-violet-50 p-2 text-zinc-950  hover:bg-violet-100">
-                Edit Task
-              </button>
+              <FaPen
+                size={25}
+                className="ml-2 cursor-pointer text-orange-500 hover:scale-125"
+              />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

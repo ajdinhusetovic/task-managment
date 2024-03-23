@@ -22,7 +22,7 @@ export default function Home() {
       {tasks.data && tasks.data.length > 0 ? (
         <div className="mx-auto my-8 flex w-11/12 flex-col gap-4 md:flex-row">
           {tasks.data.map((task, index) => (
-            <div key={index} className="md:w-1/2">
+            <div key={index} className="md:w-2/6">
               <TaskCard task={task} />
             </div>
           ))}
