@@ -24,21 +24,6 @@ export default function Home() {
 
   if (isLoading) return <p>Loading...</p>;
 
-  // const compareTasks = (a: Task, b: Task): number => {
-  //   if (a.priority !== null && b.priority !== null) {
-  //     const priorityOrder: Record<Priority, number> = {
-  //       HIGH: 3,
-  //       MEDIUM: 2,
-  //       LOW: 1,
-  //     };
-  //     return priorityOrder[b.priority] - priorityOrder[a.priority];
-  //   } else if (a.title && b.title) {
-  //     return a.title.localeCompare(b.title);
-  //   } else {
-  //     return b.createdAt.getTime() - a.createdAt.getTime();
-  //   }
-  // };
-
   const compareTasks = (a: Task, b: Task): number => {
     if (sortBy === "priority") {
       if (a.priority !== null && b.priority !== null) {
@@ -63,27 +48,27 @@ export default function Home() {
   const sortedTasks = tasks?.slice().sort(compareTasks);
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
       {sortedTasks && sortedTasks.length > 0 && (
         <div className="py-5">
-          <div className="flex w-fit items-center space-x-4 rounded-md bg-orange-300 p-5">
+          <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-2 py-4 md:space-x-2 md:p-8">
             <label className="flex items-center gap-1 text-lg font-medium">
               <input
                 type="radio"
                 value="priority"
                 checked={sortBy === "priority"}
                 onChange={handleSortChange}
-                className="h-4 w-4"
+                className="radio border-2 border-black"
               />
               Priority
             </label>
-            <label className="flex items-center gap-1 text-lg font-medium">
+            <label className="ml-2 flex items-center gap-1 text-lg font-medium">
               <input
                 type="radio"
                 value="title"
                 checked={sortBy === "title"}
                 onChange={handleSortChange}
-                className="h-4 w-4"
+                className="radio border-2 border-black"
               />
               Title
             </label>
@@ -93,14 +78,14 @@ export default function Home() {
                 value="date"
                 checked={sortBy === "date"}
                 onChange={handleSortChange}
-                className="h-4 w-4"
+                className="radio border-2 border-black"
               />
               Date (Newest to Oldest)
             </label>
           </div>
         </div>
       )}
-      <div className="mt-12 grid grid-cols-3 gap-3">
+      <div className="mb-12 mt-6 grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-3">
         {sortedTasks && sortedTasks.length > 0 ? (
           sortedTasks.map((task: Task, index) => (
             <TaskCard key={index} task={task} />

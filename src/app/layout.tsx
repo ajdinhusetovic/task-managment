@@ -1,8 +1,6 @@
 import "~/styles/globals.css";
 import { Toaster } from "../components/ui/toaster";
-
 import { Inter } from "next/font/google";
-
 import { TRPCReactProvider } from "~/trpc/react";
 import AuthProvider from "./_components/auth-provider";
 import Navbar from "./_components/navbar";
@@ -26,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-sans ${inter.variable} h-screen bg-violet-50 text-zinc-950`}
+        className={`font-sans ${inter.variable} bg-violet-50 text-zinc-950`}
       >
         <AuthProvider>
           <Navbar />
-          <div className="container mx-auto h-full">
+          <div className="container mx-auto h-fit bg-violet-50">
             <TRPCReactProvider>{children}</TRPCReactProvider>
             <Toaster />
           </div>

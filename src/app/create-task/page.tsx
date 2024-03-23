@@ -3,7 +3,7 @@ import NewTaskForm from "../_components/create-task";
 
 const page = () => {
   return (
-    <div>
+    <div className="h-screen bg-violet-50 pt-8">
       <NewTaskForm />
     </div>
   );
