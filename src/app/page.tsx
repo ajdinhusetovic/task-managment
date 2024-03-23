@@ -24,18 +24,39 @@ export default function Home() {
 
   if (isLoading) return <p>Loading...</p>;
 
+  // const compareTasks = (a: Task, b: Task): number => {
+  //   if (a.priority !== null && b.priority !== null) {
+  //     const priorityOrder: Record<Priority, number> = {
+  //       HIGH: 3,
+  //       MEDIUM: 2,
+  //       LOW: 1,
+  //     };
+  //     return priorityOrder[b.priority] - priorityOrder[a.priority];
+  //   } else if (a.title && b.title) {
+  //     return a.title.localeCompare(b.title);
+  //   } else {
+  //     return b.createdAt.getTime() - a.createdAt.getTime();
+  //   }
+  // };
+
   const compareTasks = (a: Task, b: Task): number => {
-    if (a.priority !== null && b.priority !== null) {
-      const priorityOrder: Record<Priority, number> = {
-        HIGH: 3,
-        MEDIUM: 2,
-        LOW: 1,
-      };
-      return priorityOrder[b.priority] - priorityOrder[a.priority];
-    } else if (a.title && b.title) {
-      return a.title.localeCompare(b.title);
+    if (sortBy === "priority") {
+      if (a.priority !== null && b.priority !== null) {
+        const priorityOrder: Record<Priority, number> = {
+          HIGH: 3,
+          MEDIUM: 2,
+          LOW: 1,
+        };
+        return (
+          (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+        );
+      } else {
+        return 0;
+      }
+    } else if (sortBy === "title") {
+      return (a.title || "").localeCompare(b.title || "");
     } else {
-      return b.createdAt.getTime() - a.createdAt.getTime();
+      return (b.createdAt.getTime() || 0) - (a.createdAt.getTime() || 0);
     }
   };
 
