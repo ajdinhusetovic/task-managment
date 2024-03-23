@@ -37,8 +37,9 @@ const markAsDoneSchema = z.object({
 
 export const taskRouter = createTRPCRouter({
   all: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
     const tasks: Task[] = await ctx.db.task.findMany({
-      where: { isDone: false },
+      where: { userId, isDone: false },
     });
     return tasks;
   }),
