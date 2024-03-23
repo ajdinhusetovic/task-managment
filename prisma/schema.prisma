@@ -62,7 +62,7 @@ model User {
     accounts       Account[]
     sessions       Session[]
     tasks          Task[]
-    completedTasks Int       @default(0)
+    completedTasks Int?      @default(0)
 }
 
 model VerificationToken {
