@@ -1,14 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import React, {
-  type FormEvent,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import InputComponent from "./input-component";
+import React, { type FormEvent, useState } from "react";
 import { api } from "~/trpc/react";
 import { useToast } from "../../components/ui/use-toast";
 import NotLoggedIn from "./not-logged-in";
@@ -25,26 +18,25 @@ const NewTaskForm = () => {
 
 function Form() {
   const { toast } = useToast();
-  const session = useSession();
   const [textAreaValue, setTextAreaValue] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskPriority, setTaskPriority] = useState("LOW");
-  const [isTaskDone, setIsTaskDone] = useState(false);
+  const isTaskDone = false;
 
   const createTask = api.task.create.useMutation({
-    onSuccess: (newTask) => {
-      console.log(newTask);
+    onSuccess: () => {
       setTaskPriority("");
       setTaskTitle("");
       setTextAreaValue("");
+      toast({ title: "Task created.", variant: "default" });
     },
   });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!taskTitle || !textAreaValue) {
-      console.log("Please fill in all fields");
+    if (!taskTitle) {
+      toast({ title: "Please fill in all the fields", variant: "destructive" });
       return;
     }
 

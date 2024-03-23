@@ -13,19 +13,12 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaPen } from "react-icons/fa";
 import InputComponent from "./input-component";
 import { Architects_Daughter } from "next/font/google";
+import { type Task } from "@prisma/client";
 
 const architectsDaughter = Architects_Daughter({
   weight: "400",
   subsets: ["latin"],
 });
-
-export interface Task {
-  id: string;
-  title: string;
-  description?: string;
-  priority?: string;
-  isDone?: boolean;
-}
 
 interface TaskCardProps {
   task: Task;
@@ -56,22 +49,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 
   const { mutate: handleDelete } = api.task.delete.useMutation({
     onMutate: async (deleteId) => {
-      // Cancel any outgoing refetches
       await trpc.task.all.cancel();
 
-      // Snapshot the previous value
       const previousTasks = trpc.task.all.getData();
 
-      // Update to the new value
       trpc.task.all.setData(undefined, (prev) => {
         if (!prev) return previousTasks;
         return prev.filter((t) => t.id !== deleteId);
       });
 
-      // Return a context object with the snapshotted value
       return { previousTasks };
     },
-    // Always refetch after
     onSettled: async () => {
       await trpc.task.all.invalidate();
     },
@@ -89,8 +77,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     updateTask.mutate({
       id: task.id,
       title: taskTitle || task.title,
-      description: (textAreaValue || task.description) ?? "", // Provide a default value if task.description is undefined
-      priority: (taskPriority || task.priority) ?? "", // Provide a default value if task.priority is undefined
+      description: (textAreaValue || task.description) ?? "",
+      priority: (taskPriority || task.priority) ?? "",
     });
   };
 
@@ -109,21 +97,21 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 
   return (
     <div
-      className={`flex flex-col gap-2 rounded bg-orange-200 px-4 pb-4 text-zinc-950 ${architectsDaughter.className}`}
+      className={`flex flex-col justify-between rounded bg-orange-300 py-4 ${architectsDaughter.className}`}
     >
-      <div
-        className={`mt-2 flex items-center gap-2 bg-transparent text-center`}
-      >
-        <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
-        <p className="p-1 font-medium">{task.priority} PRIORITY</p>
+      <div className="mx-auto w-11/12">
+        <div className="flex items-center">
+          <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
+          <p className="p-1 font-medium">{task.priority} PRIORITY</p>
+        </div>
+        <div>
+          <h1>{task.title}</h1>
+        </div>
+        <div>
+          <p className="break-words text-lg">{task.description}</p>
+        </div>
       </div>
-      <div>
-        <h1 className="mt-2 text-4xl font-semibold">{task.title}</h1>
-      </div>
-      <div>
-        <p className="text-2xl">{task.description}</p>
-      </div>
-      <div className="mt-6 flex">
+      <div className="mx-auto flex w-11/12 items-center pt-6">
         {task.isDone ? (
           ""
         ) : (

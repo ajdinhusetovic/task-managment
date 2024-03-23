@@ -18,9 +18,6 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        indie_flower: ["var(--indie_flower)"],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -26,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-sans ${inter.variable} bg-violet-50 text-zinc-950`}
+        className={`font-sans ${inter.variable} h-screen bg-violet-50 text-zinc-950`}
       >
         <AuthProvider>
           <Navbar />
-          <div className="container mx-auto">
+          <div className="container mx-auto h-full">
             <TRPCReactProvider>{children}</TRPCReactProvider>
             <Toaster />
           </div>
