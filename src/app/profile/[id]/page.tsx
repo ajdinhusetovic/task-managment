@@ -3,12 +3,16 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
+import { api } from "~/trpc/react";
 
 const Profile = () => {
   const session = useSession();
-  const user = { ...session.data?.user };
+  const userId = session.data?.user?.id ?? "";
 
-  console.log(session.data?.user.name);
+  const userQuery = api.task.getUser.useQuery(userId);
+  const user = { ...userQuery?.data };
+
+  console.log(user);
 
   return (
     <div className="mt-16 flex flex-col items-center">
@@ -20,7 +24,9 @@ const Profile = () => {
         className="rounded-full"
       />
       <div>
-        <h1 className="mt-4 text-4xl">{user.name}</h1>
+        <p className="mt-4 text-zinc-700">{user.email}</p>
+        <h1 className="mt-2 text-4xl">{user.name}</h1>
+        <p>Tasks completed: {user.completedTasks}</p>
       </div>
     </div>
   );
