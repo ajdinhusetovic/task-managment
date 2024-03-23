@@ -29,7 +29,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 bg-violet-50 p-2 shadow"
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-violet-50 p-2 shadow"
           >
             <li className="text-2xl text-orange-500">
               <Link href="/">Home</Link>
@@ -37,6 +37,11 @@ const Navbar = () => {
             <li className="text-orange-500">
               <Link href="/create-task">Create Task</Link>
             </li>
+            {user !== undefined && (
+              <li className="text-orange-500">
+                <Link href="/completed-tasks">Completed</Link>
+              </li>
+            )}
             {user !== undefined && (
               <li className="text-orange-500">
                 <Link href={`/profiles/${user?.id}`}>Profile</Link>
@@ -61,7 +66,12 @@ const Navbar = () => {
           </li>
           {user !== undefined && (
             <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-200">
-              <Link href={`/profiles/${user?.id}`}>Profile</Link>
+              <Link href="/completed-tasks">Completed</Link>
+            </li>
+          )}
+          {user !== undefined && (
+            <li className="rounded text-lg font-medium text-zinc-950 hover:bg-orange-200">
+              <Link href={`/profile/${user?.id}`}>Profile</Link>
             </li>
           )}
         </ul>
