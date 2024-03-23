@@ -46,8 +46,9 @@ export const taskRouter = createTRPCRouter({
   }),
 
   unfinishedTasks: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
     const tasks: Task[] = await ctx.db.task.findMany({
-      where: { isDone: true },
+      where: { userId, isDone: true },
     });
     return tasks;
   }),
