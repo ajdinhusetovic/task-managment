@@ -62,6 +62,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     },
     onSettled: async () => {
       await trpc.task.all.invalidate();
+      await trpc.task.unfinishedTasks.invalidate();
     },
   });
 
@@ -100,15 +101,16 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       className={`flex flex-col justify-between rounded bg-orange-300 py-4 ${architectsDaughter.className}`}
     >
       <div className="mx-auto w-11/12">
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
-          <p className="p-1 font-medium">{task.priority} PRIORITY</p>
+          <p className="p-1 text-lg font-medium">{task.priority} PRIORITY</p>
         </div>
         <div>
-          <h1>{task.title}</h1>
+          <h1 className="text-4xl font-semibold">{task.title}</h1>
+          <hr className="border border-t-0 border-b-gray-700" />
         </div>
-        <div>
-          <p className="break-words text-lg">{task.description}</p>
+        <div className="mt-2">
+          <p className="break-words text-2xl">{task.description}</p>
         </div>
       </div>
       <div className="mx-auto flex w-11/12 items-center pt-6">
