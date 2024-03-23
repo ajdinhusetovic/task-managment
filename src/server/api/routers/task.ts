@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { User, type Task } from "@prisma/client";
+import { type User, type Task } from "@prisma/client";
 
 enum Priority {
   HIGH = "HIGH",
