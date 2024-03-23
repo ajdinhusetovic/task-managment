@@ -22,13 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-screen">
       <body
-        className={`font-sans ${inter.variable} bg-violet-50 text-zinc-950`}
+        className={`font-sans ${inter.variable} h-screen bg-violet-50 text-zinc-950`}
       >
         <AuthProvider>
           <Navbar />
-          <div className="container mx-auto h-fit bg-violet-50">
+          <div className="container mx-auto bg-violet-50">
             <TRPCReactProvider>{children}</TRPCReactProvider>
             <Toaster />
           </div>
