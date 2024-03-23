@@ -6,6 +6,7 @@ import TaskCard from "./_components/task-card";
 import { useState } from "react";
 import NotLoggedIn from "./_components/not-logged-in";
 import { type Priority, type Task } from "@prisma/client";
+import Link from "next/link";
 
 export default function Home() {
   const { data: tasks, isLoading } = api.task.all.useQuery();
@@ -48,56 +49,71 @@ export default function Home() {
   const sortedTasks = tasks?.slice().sort(compareTasks);
 
   return (
-    <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
+    <>
       {sortedTasks && sortedTasks.length > 0 && (
-        <div className="py-12">
-          <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-2 py-4 md:space-x-2 md:p-8">
-            <label className="flex items-center gap-1 text-lg font-medium">
-              <input
-                type="radio"
-                value="priority"
-                checked={sortBy === "priority"}
-                onChange={handleSortChange}
-                className="radio border-2 border-black"
-              />
-              Priority
-            </label>
-            <label className="ml-2 flex items-center gap-1 text-lg font-medium">
-              <input
-                type="radio"
-                value="title"
-                checked={sortBy === "title"}
-                onChange={handleSortChange}
-                className="radio border-2 border-black"
-              />
-              Title
-            </label>
-            <label className="flex items-center gap-1 text-lg font-medium">
-              <input
-                type="radio"
-                value="date"
-                checked={sortBy === "date"}
-                onChange={handleSortChange}
-                className="radio border-2 border-black"
-              />
-              Date (Newest to Oldest)
-            </label>
+        <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
+          <div className="py-12">
+            <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-2 py-4 md:space-x-2 md:p-8">
+              <label className="flex items-center gap-1 text-lg font-medium">
+                <input
+                  type="radio"
+                  value="priority"
+                  checked={sortBy === "priority"}
+                  onChange={handleSortChange}
+                  className="radio border-2 border-black"
+                />
+                Priority
+              </label>
+              <label className="ml-2 flex items-center gap-1 text-lg font-medium">
+                <input
+                  type="radio"
+                  value="title"
+                  checked={sortBy === "title"}
+                  onChange={handleSortChange}
+                  className="radio border-2 border-black"
+                />
+                Title
+              </label>
+              <label className="flex items-center gap-1 text-lg font-medium">
+                <input
+                  type="radio"
+                  value="date"
+                  checked={sortBy === "date"}
+                  onChange={handleSortChange}
+                  className="radio border-2 border-black"
+                />
+                Date (Newest to Oldest)
+              </label>
+            </div>
           </div>
         </div>
       )}
-      <div className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
-        {sortedTasks && sortedTasks.length > 0 ? (
-          sortedTasks.map((task: Task, index) => (
-            <TaskCard key={index} task={task} />
-          ))
-        ) : (
-          <div className="flex h-[300px] items-center justify-center">
-            <h1 className="rounded bg-orange-400 p-8 text-center text-4xl font-medium">
-              There are currently no tasks available.
-            </h1>
+      {sortedTasks && sortedTasks.length > 0 ? (
+        sortedTasks.map((task: Task, index) => (
+          <div
+            key={index}
+            className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3"
+          >
+            <TaskCard task={task} />
           </div>
-        )}
-      </div>
-    </div>
+        ))
+      ) : (
+        <div className=" flex h-screen flex-col items-center justify-center">
+          <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 p-24">
+            <h1 className="text-4xl md:text-5xl">Start creating your tasks!</h1>
+            <p className="mt-4 text-lg">
+              You currently do not have any tasks. Click the button below to get
+              started.
+            </p>
+            <Link
+              href="/create-task"
+              className="mt-4 rounded-md bg-orange-400 p-4 hover:bg-orange-500"
+            >
+              Start creating tasks
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
