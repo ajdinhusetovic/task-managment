@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
       {sortedTasks && sortedTasks.length > 0 && (
-        <div className="py-5">
+        <div className="py-12">
           <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-2 py-4 md:space-x-2 md:p-8">
             <label className="flex items-center gap-1 text-lg font-medium">
               <input

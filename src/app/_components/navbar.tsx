@@ -44,7 +44,7 @@ const Navbar = () => {
             )}
           </ul>
         </div>
-        <a className="btn btn-ghost text-4xl" href="/">
+        <a className="btn btn-ghost text-lg md:text-4xl" href="/">
           Task<span className="text-orange-500">Managment</span>
         </a>
       </div>
@@ -73,7 +73,7 @@ const Navbar = () => {
           </button>
         ) : (
           <button
-            className="rounded-md bg-violet-50 p-2 font-medium hover:bg-violet-100"
+            className="text-md rounded-md bg-orange-400 p-2 font-medium hover:bg-orange-500 md:p-2"
             onClick={() => void signOut()}
           >
             Log Out

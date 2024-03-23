@@ -1,16 +1,10 @@
 import "~/styles/globals.css";
 import { Toaster } from "../components/ui/toaster";
-import { Inter, Kanit, Montserrat } from "next/font/google";
+import { Kanit } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import AuthProvider from "./_components/auth-provider";
 import Navbar from "./_components/navbar";
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-sans",
-// });
-
-// const montserrat = Montserrat({ weight: "400", subsets: ["latin"] });
 const kanit = Kanit({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
@@ -25,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-screen">
+    <html lang="en" className="h-screen bg-violet-50">
       <body
         className={` ${kanit.className} h-screen bg-violet-50 text-zinc-950`}
       >
         <AuthProvider>
           <Navbar />
-          <div className="container mx-auto bg-violet-50">
+          <div className="mx-auto w-11/12 bg-violet-50 md:container">
             <TRPCReactProvider>{children}</TRPCReactProvider>
             <Toaster />
           </div>
