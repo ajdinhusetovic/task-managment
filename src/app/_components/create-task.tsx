@@ -25,13 +25,18 @@ function Form() {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskPriority, setTaskPriority] = useState("LOW");
+  const [taskCategory, setTaskCategory] = useState("other");
   const isTaskDone = false;
+
+  console.log("Priority", taskPriority);
+  console.log("Category", taskCategory);
 
   const createTask = api.task.create.useMutation({
     onSuccess: () => {
       setTaskPriority("LOW");
       setTaskTitle("");
       setTextAreaValue("");
+      setTaskCategory("other");
       toast({ title: "Task created.", variant: "default" });
     },
 
@@ -60,6 +65,7 @@ function Form() {
       description: textAreaValue,
       priority: taskPriority,
       isDone: isTaskDone,
+      category: taskCategory,
     });
   };
 
@@ -101,6 +107,23 @@ function Form() {
           <option value="LOW">Low</option>
           <option value="MEDIUM">Medium</option>
           <option value="HIGH">High</option>
+        </select>
+      </div>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <label className="text-lg font-medium">Task Category</label>
+        <select
+          name="taskCategory"
+          onChange={(e) => setTaskCategory(e.target.value)}
+          className="rounded bg-violet-50  p-2 text-zinc-950 md:w-[200px]"
+          value={taskCategory}
+        >
+          <option value="home">Home</option>
+          <option value="personal">Personal</option>
+          <option value="health">Health</option>
+          <option value="education">Education</option>
+          <option value="work">Work</option>
+          <option value="finance">Finance</option>
+          <option value="other">Other</option>
         </select>
       </div>
       <button className="mx-auto my-4 w-full rounded-md bg-violet-50 p-2 font-medium text-zinc-950 hover:bg-violet-100 md:w-11/12">

@@ -1,12 +1,12 @@
 "use client";
 
-import { api } from "~/trpc/react";
+import { type Task, type Priority } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import TaskCard from "./_components/task-card";
-import { useState } from "react";
-import NotLoggedIn from "./_components/not-logged-in";
-import { type Priority, type Task } from "@prisma/client";
 import Link from "next/link";
+import { useState } from "react";
+import { api } from "~/trpc/react";
+import NotLoggedIn from "./_components/not-logged-in";
+import TaskCard from "./_components/task-card";
 
 export default function Home() {
   const { data: tasks, isLoading } = api.task.all.useQuery();
@@ -14,9 +14,17 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<"priority" | "title" | "date">(
     "priority",
   );
+  const [taskCategory, setTaskCategory] = useState("");
 
   const handleSortChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSortBy(event.target.value as "priority" | "title" | "date");
+  };
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const selectedCategory = event.target.value;
+    setTaskCategory(selectedCategory === "all" ? "" : selectedCategory);
   };
 
   if (session.status !== "authenticated") {
@@ -46,14 +54,21 @@ export default function Home() {
     }
   };
 
-  const sortedTasks = tasks?.slice().sort(compareTasks);
+  let filteredTasks = tasks ?? [];
+  if (taskCategory !== "") {
+    filteredTasks = filteredTasks.filter(
+      (task) => task.category === taskCategory,
+    );
+  }
+
+  const sortedTasks = filteredTasks.slice().sort(compareTasks);
 
   return (
     <>
-      {sortedTasks && sortedTasks.length > 0 && (
+      {tasks && tasks.length > 0 && (
         <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
           <div className="py-12">
-            <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-2 py-4 md:space-x-2 md:p-8">
+            <div className="flex w-fit flex-wrap items-center gap-2 rounded-md bg-orange-300 p-4 md:space-x-2 md:p-8">
               <label className="flex items-center gap-1 text-lg font-medium">
                 <input
                   type="radio"
@@ -82,37 +97,27 @@ export default function Home() {
                   onChange={handleSortChange}
                   className="radio border-2 border-black"
                 />
-                Date (Newest to Oldest)
+                Date
               </label>
+              <select
+                name="taskCategory"
+                onChange={handleCategoryChange}
+                className="mt-2 w-full cursor-pointer rounded bg-orange-400 p-2 text-zinc-950 md:w-[200px]"
+                value={taskCategory || "all"}
+              >
+                <option value="all">All</option>
+                <option value="home">Home</option>
+                <option value="personal">Personal</option>
+                <option value="health">Health</option>
+                <option value="education">Education</option>
+                <option value="work">Work</option>
+                <option value="finance">Finance</option>
+                <option value="other">Other</option>
+              </select>
             </div>
           </div>
         </div>
       )}
-      {/* <div className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
-        {sortedTasks && sortedTasks.length > 0 ? (
-          sortedTasks.map((task: Task, index) => (
-            <TaskCard key={index} task={task} />
-          ))
-        ) : (
-          <div className=" flex h-screen flex-col items-center justify-center">
-            <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 p-24">
-              <h1 className="text-4xl md:text-5xl">
-                Start creating your tasks!
-              </h1>
-              <p className="mt-4 text-lg">
-                You currently do not have any tasks. Click the button below to
-                get started.
-              </p>
-              <Link
-                href="/create-task"
-                className="mt-4 rounded-md bg-orange-400 p-4 hover:bg-orange-500"
-              >
-                Start creating tasks
-              </Link>
-            </div>
-          </div>
-        )}
-      </div> */}
       <div className="mb-12 mt-6 w-full">
         {sortedTasks && sortedTasks.length > 0 && (
           <div className="grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
@@ -121,7 +126,7 @@ export default function Home() {
             ))}
           </div>
         )}
-        {!(sortedTasks && sortedTasks.length > 0) && (
+        {!(tasks && tasks.length > 0) && (
           <div className="flex h-screen flex-col items-center justify-center">
             <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 px-8 py-16 md:p-24">
               <h1 className="text-4xl md:text-5xl">

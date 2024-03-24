@@ -29,6 +29,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
+  const [taskCategory, setTaskCategory] = useState("");
 
   let priorityColor = "";
 
@@ -81,6 +82,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       title: taskTitle || task.title,
       description: (textAreaValue || task.description) ?? "",
       priority: (taskPriority || task.priority) ?? "",
+      category: (taskCategory || task.category) ?? "",
     });
   };
 
@@ -105,6 +107,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         <div className="flex items-center gap-1">
           <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
           <p className="p-1 text-lg font-medium">{task.priority} PRIORITY</p>
+          <p className="ml-2 rounded-md bg-orange-400 px-2 py-1">
+            {task.category}
+          </p>
         </div>
         <div>
           <h1 className="pt-2 text-4xl font-semibold">{task.title}</h1>
@@ -171,12 +176,29 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
                 <select
                   name="taskPriority"
                   onChange={(e) => setTaskPriority(e.target.value)}
-                  className="rounded bg-violet-50 p-2 font-medium text-yellow-600"
+                  className="rounded bg-violet-50 p-2 font-medium text-zinc-950"
                   value={taskPriority}
                 >
                   <option value="LOW">Low</option>
                   <option value="MEDIUM">Medium</option>
                   <option value="HIGH">High</option>
+                </select>
+              </div>
+              <div className="mt-4 flex flex-col">
+                <label className="text-lg font-medium">Task Category</label>
+                <select
+                  name="taskCategory"
+                  onChange={(e) => setTaskCategory(e.target.value)}
+                  className="rounded bg-violet-50 p-2 font-medium text-zinc-950"
+                  value={taskCategory}
+                >
+                  <option value="home">Home</option>
+                  <option value="personal">Personal</option>
+                  <option value="health">Health</option>
+                  <option value="education">Education</option>
+                  <option value="work">Work</option>
+                  <option value="finance">Finance</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <button
