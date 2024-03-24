@@ -4,12 +4,12 @@ import React from "react";
 const NotLoggedIn = () => {
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="mb-24 bg-orange-300 p-24">
-        <h1 className="text-5xl">
+      <div className="mb-24 bg-orange-300 p-8 font-semibold md:p-24">
+        <h1 className="text-2xl md:text-5xl">
           Task <span className="text-orange-500">Managment</span>: Simplifying
           your life, one task at a time.
         </h1>
-        <p className="text-lg">
+        <p className="text-md md:text-lg">
           You are on step away from efficiently managing your tasks.
         </p>
         <button

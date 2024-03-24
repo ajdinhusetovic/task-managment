@@ -19,6 +19,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ userId }) => {
 
   const handleReset = () => {
     userResetCompletedTasks.mutate(userId);
+    window.location.reload();
   };
 
   if (userQuery.isLoading) {
