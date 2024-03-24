@@ -4,12 +4,14 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import Loading from "~/app/_components/loading";
+import NotLoggedIn from "~/app/_components/not-logged-in";
 import { api } from "~/trpc/react";
 
-const Profile = () => {
-  const session = useSession();
-  const userId = session.data?.user?.id ?? "";
+interface ProfileContentProps {
+  userId: string;
+}
 
+const ProfileContent: React.FC<ProfileContentProps> = ({ userId }) => {
   const userQuery = api.user.getUser.useQuery(userId);
   const user = { ...userQuery?.data };
 
@@ -48,6 +50,17 @@ const Profile = () => {
       </div>
     </div>
   );
+};
+
+const Profile: React.FC = () => {
+  const session = useSession();
+  const userId = session.data?.user?.id ?? "";
+
+  if (session.status === "unauthenticated") {
+    return <NotLoggedIn />;
+  }
+
+  return <ProfileContent userId={userId} />;
 };
 
 export default Profile;
