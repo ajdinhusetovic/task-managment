@@ -15,9 +15,11 @@ const priorityValues: [string, ...string[]] = [
 ];
 
 const inputSchema = z.object({
-  title: z.string(),
+  title: z.string().min(3, "Title must contain at least 3 characters"),
   priority: z.enum(priorityValues),
-  description: z.string(),
+  description: z
+    .string()
+    .max(300, "Description exceeds maximum length of 300 characters"),
   isDone: z.boolean(),
 });
 
