@@ -41,9 +41,7 @@ function Form() {
     },
 
     onError: (error) => {
-      // Check if error exists and is an array with at least one element
       if (error.data?.zodError) {
-        // Returning only first zod error message to client
         const fieldError = (error.data.zodError.fieldErrors = JSON.parse(
           error.message,
         )[0].message);
