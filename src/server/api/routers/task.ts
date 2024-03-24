@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { type User, type Task } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 enum Priority {
   HIGH = "HIGH",
@@ -41,6 +42,14 @@ const markAsDoneSchema = z.object({
 export const taskRouter = createTRPCRouter({
   all: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
+
+    if (!userId) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User id not provided",
+      });
+    }
+
     const tasks: Task[] = await ctx.db.task.findMany({
       where: { userId, isDone: false },
     });
@@ -49,6 +58,14 @@ export const taskRouter = createTRPCRouter({
 
   unfinishedTasks: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user.id;
+
+    if (!userId) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User id not provided",
+      });
+    }
+
     const tasks: Task[] = await ctx.db.task.findMany({
       where: { userId, isDone: true },
     });
