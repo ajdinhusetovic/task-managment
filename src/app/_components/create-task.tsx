@@ -34,7 +34,10 @@ function Form() {
       setTaskTitle("");
       setTextAreaValue("");
       setTaskCategory("other");
-      toast({ title: "Task created.", variant: "default" });
+      toast({
+        title: "Task created. Go home to see all your tasks",
+        variant: "default",
+      });
     },
 
     onError: (error) => {

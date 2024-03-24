@@ -10,7 +10,7 @@ const NotLoggedIn = () => {
           your life, one task at a time.
         </h1>
         <p className="text-md md:text-lg">
-          You are on step away from efficiently managing your tasks.
+          You are one step away from efficiently managing your tasks.
         </p>
         <button
           onClick={() => void signIn()}
