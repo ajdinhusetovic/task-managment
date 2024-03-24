@@ -94,12 +94,12 @@ function Form() {
           placeholder="Describe your task..."
         ></textarea>
       </div>
-      <div className="flex flex-col gap-2 md:flex-row">
+      <div className="flex w-full flex-col gap-2 md:w-11/12  ">
         <label className="text-lg font-medium">Task Priority</label>
         <select
           name="taskPriority"
           onChange={(e) => setTaskPriority(e.target.value)}
-          className="rounded bg-violet-50  p-2 text-zinc-950 md:w-[200px]"
+          className="w-full rounded bg-violet-50 p-2 text-zinc-950  md:max-w-[200px]"
           value={taskPriority}
         >
           <option value="LOW">Low</option>
@@ -107,12 +107,12 @@ function Form() {
           <option value="HIGH">High</option>
         </select>
       </div>
-      <div className="flex flex-col gap-2 md:flex-row">
+      <div className="flex w-full flex-col gap-2 md:w-11/12">
         <label className="text-lg font-medium">Task Category</label>
         <select
           name="taskCategory"
           onChange={(e) => setTaskCategory(e.target.value)}
-          className="rounded bg-violet-50  p-2 text-zinc-950 md:w-[200px]"
+          className="w-full rounded bg-violet-50 p-2 text-zinc-950 md:max-w-[200px]"
           value={taskCategory}
         >
           <option value="home">Home</option>

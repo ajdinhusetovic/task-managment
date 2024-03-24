@@ -4,8 +4,8 @@ import React from "react";
 const NotLoggedIn = () => {
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="mb-24 bg-orange-300 p-8 font-semibold md:p-24">
-        <h1 className="text-2xl md:text-5xl">
+      <div className="mb-44 bg-orange-300 p-8 md:mb-24 md:max-w-[750px] md:p-24 2xl:max-w-full">
+        <h1 className="text-2xl font-semibold md:text-5xl">
           Task <span className="text-orange-500">Managment</span>: Simplifying
           your life, one task at a time.
         </h1>
