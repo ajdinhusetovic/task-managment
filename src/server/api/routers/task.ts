@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { type User, type Task } from "@prisma/client";
+import { type User, type Task, type TaskCategory } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 enum Priority {
@@ -9,10 +9,30 @@ enum Priority {
   LOW = "LOW",
 }
 
+enum TaskCategorye {
+  health = "health",
+  work = "work",
+  education = "education",
+  finance = "finance",
+  personal = "personal",
+  home = "home",
+  other = "other",
+}
+
 const priorityValues: [string, ...string[]] = [
   Priority.HIGH,
   Priority.MEDIUM,
   Priority.LOW,
+];
+
+const categoryValues: [string, ...string[]] = [
+  TaskCategorye.health,
+  TaskCategorye.work,
+  TaskCategorye.education,
+  TaskCategorye.finance,
+  TaskCategorye.personal,
+  TaskCategorye.home,
+  TaskCategorye.other,
 ];
 
 const inputSchema = z.object({
@@ -22,6 +42,7 @@ const inputSchema = z.object({
     .string()
     .max(300, "Description exceeds maximum length of 300 characters"),
   isDone: z.boolean(),
+  category: z.enum(categoryValues),
 });
 
 const updateSchema = z.object({
@@ -29,6 +50,7 @@ const updateSchema = z.object({
   priority: z.enum(priorityValues),
   description: z.string(),
   id: z.string(),
+  category: z.enum(categoryValues),
 });
 
 const taskIdSchema = z.string();
@@ -82,8 +104,12 @@ export const taskRouter = createTRPCRouter({
   create: protectedProcedure
     .input(inputSchema)
     .mutation(
-      async ({ ctx, input: { title, priority, description, isDone } }) => {
+      async ({
+        ctx,
+        input: { title, priority, description, isDone, category },
+      }) => {
         const taskPriority: Priority = priority as Priority;
+        const taskCategory: TaskCategory = category as TaskCategory;
         const task: Task = await ctx.db.task.create({
           data: {
             title,
@@ -91,6 +117,7 @@ export const taskRouter = createTRPCRouter({
             description,
             isDone,
             userId: ctx.session.user.id,
+            category: taskCategory,
           },
         });
 
@@ -110,19 +137,26 @@ export const taskRouter = createTRPCRouter({
 
   update: protectedProcedure
     .input(updateSchema)
-    .mutation(async ({ ctx, input: { id, title, priority, description } }) => {
-      const taskPriority: Priority = priority as Priority;
-      const updatedTask = await ctx.db.task.update({
-        where: { id },
-        data: {
-          title,
-          priority: taskPriority,
-          description,
-        },
-      });
+    .mutation(
+      async ({
+        ctx,
+        input: { id, title, priority, description, category },
+      }) => {
+        const taskPriority: Priority = priority as Priority;
+        const taskCategory: TaskCategory = category as TaskCategory;
+        const updatedTask = await ctx.db.task.update({
+          where: { id },
+          data: {
+            title,
+            priority: taskPriority,
+            description,
+            category: taskCategory,
+          },
+        });
 
-      return updatedTask;
-    }),
+        return updatedTask;
+      },
+    ),
 
   markAsDone: protectedProcedure
     .input(markAsDoneSchema)
