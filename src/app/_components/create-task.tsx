@@ -28,9 +28,6 @@ function Form() {
   const [taskCategory, setTaskCategory] = useState("other");
   const isTaskDone = false;
 
-  console.log("Priority", taskPriority);
-  console.log("Category", taskCategory);
-
   const createTask = api.task.create.useMutation({
     onSuccess: () => {
       setTaskPriority("LOW");
