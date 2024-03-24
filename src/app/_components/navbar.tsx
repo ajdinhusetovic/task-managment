@@ -79,7 +79,7 @@ const Navbar = () => {
       <div className="navbar-end">
         {user === undefined ? (
           <button
-            className="rounded-md bg-violet-50 p-2 font-medium"
+            className="text-md rounded-md bg-orange-400 p-2 font-medium hover:bg-orange-500 md:p-2"
             onClick={() => void signIn()}
           >
             Log In

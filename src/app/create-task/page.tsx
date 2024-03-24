@@ -3,7 +3,7 @@ import NewTaskForm from "../_components/create-task";
 
 const page = () => {
   return (
-    <div className="pt-8">
+    <div>
       <NewTaskForm />
     </div>
   );
