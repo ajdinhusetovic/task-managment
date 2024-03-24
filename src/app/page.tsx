@@ -88,32 +88,59 @@ export default function Home() {
           </div>
         </div>
       )}
-      {sortedTasks && sortedTasks.length > 0 ? (
-        sortedTasks.map((task: Task, index) => (
-          <div
-            key={index}
-            className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3"
-          >
-            <TaskCard task={task} />
+      {/* <div className="mb-12 mt-6 grid w-full grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
+        {sortedTasks && sortedTasks.length > 0 ? (
+          sortedTasks.map((task: Task, index) => (
+            <TaskCard key={index} task={task} />
+          ))
+        ) : (
+          <div className=" flex h-screen flex-col items-center justify-center">
+            <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 p-24">
+              <h1 className="text-4xl md:text-5xl">
+                Start creating your tasks!
+              </h1>
+              <p className="mt-4 text-lg">
+                You currently do not have any tasks. Click the button below to
+                get started.
+              </p>
+              <Link
+                href="/create-task"
+                className="mt-4 rounded-md bg-orange-400 p-4 hover:bg-orange-500"
+              >
+                Start creating tasks
+              </Link>
+            </div>
           </div>
-        ))
-      ) : (
-        <div className=" flex h-screen flex-col items-center justify-center">
-          <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 p-24">
-            <h1 className="text-4xl md:text-5xl">Start creating your tasks!</h1>
-            <p className="mt-4 text-lg">
-              You currently do not have any tasks. Click the button below to get
-              started.
-            </p>
-            <Link
-              href="/create-task"
-              className="mt-4 rounded-md bg-orange-400 p-4 hover:bg-orange-500"
-            >
-              Start creating tasks
-            </Link>
+        )}
+      </div> */}
+      <div className="mb-12 mt-6 w-full">
+        {sortedTasks && sortedTasks.length > 0 && (
+          <div className="grid grid-cols-1 gap-3 md:mt-8 md:grid-cols-2 xl:grid-cols-3">
+            {sortedTasks.map((task: Task, index) => (
+              <TaskCard key={index} task={task} />
+            ))}
           </div>
-        </div>
-      )}
+        )}
+        {!(sortedTasks && sortedTasks.length > 0) && (
+          <div className="flex h-screen flex-col items-center justify-center">
+            <div className="mb-24 flex flex-col items-center justify-center rounded bg-orange-300 px-8 py-16 md:p-24">
+              <h1 className="text-4xl md:text-5xl">
+                Start creating your tasks!
+              </h1>
+              <p className="mt-4 text-lg">
+                You currently do not have any tasks. Click the button below to
+                get started.
+              </p>
+              <Link
+                href="/create-task"
+                className="mt-4 rounded-md bg-orange-400 p-4 hover:bg-orange-500"
+              >
+                Start creating tasks
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

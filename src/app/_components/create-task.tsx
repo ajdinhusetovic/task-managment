@@ -29,10 +29,21 @@ function Form() {
 
   const createTask = api.task.create.useMutation({
     onSuccess: () => {
-      setTaskPriority("");
+      setTaskPriority("LOW");
       setTaskTitle("");
       setTextAreaValue("");
       toast({ title: "Task created.", variant: "default" });
+    },
+
+    onError: (error) => {
+      // Check if error exists and is an array with at least one element
+      if (error.data?.zodError) {
+        // Returning only first zod error message to client
+        const fieldError = (error.data.zodError.fieldErrors = JSON.parse(
+          error.message,
+        )[0].message);
+        toast({ title: fieldError, variant: "destructive" });
+      }
     },
   });
 
