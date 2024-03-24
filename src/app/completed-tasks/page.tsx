@@ -5,9 +5,14 @@ import { api } from "~/trpc/react";
 import TaskCard from "../_components/task-card";
 import { type Task } from "@prisma/client";
 import Link from "next/link";
+import Loading from "../_components/loading";
 
 const Page = () => {
   const tasks = api.task.unfinishedTasks.useQuery();
+
+  if (tasks.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

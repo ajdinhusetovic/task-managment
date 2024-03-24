@@ -15,6 +15,7 @@ import InputComponent from "./input-component";
 import { Patrick_Hand } from "next/font/google";
 
 import { type Task } from "@prisma/client";
+import { toast } from "~/components/ui/use-toast";
 
 const patrickHand = Patrick_Hand({
   weight: "400",
@@ -72,6 +73,15 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     onSuccess: () => {
       window.location.reload();
     },
+
+    onError: (error) => {
+      if (error.data?.zodError) {
+        const fieldError = (error.data.zodError.fieldErrors = JSON.parse(
+          error.message,
+        )[0].message);
+        toast({ title: fieldError, variant: "destructive" });
+      }
+    },
   });
 
   const handleUpdate = (e: FormEvent) => {
@@ -107,7 +117,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
         <div className="flex items-center gap-1">
           <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
           <p className="p-1 text-lg font-medium">{task.priority} PRIORITY</p>
-          <p className="ml-2 rounded-md bg-orange-400 px-2 py-1">
+          <p className="ml-2 rounded-md bg-orange-400 px-2 py-1 text-lg font-semibold tracking-wide">
             {task.category}
           </p>
         </div>

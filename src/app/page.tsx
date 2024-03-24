@@ -7,6 +7,7 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 import NotLoggedIn from "./_components/not-logged-in";
 import TaskCard from "./_components/task-card";
+import Loading from "./_components/loading";
 
 export default function Home() {
   const { data: tasks, isLoading } = api.task.all.useQuery();
@@ -31,7 +32,9 @@ export default function Home() {
     return <NotLoggedIn />;
   }
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const compareTasks = (a: Task, b: Task): number => {
     if (sortBy === "priority") {

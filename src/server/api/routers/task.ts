@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { type User, type Task, type TaskCategory } from "@prisma/client";
+import { type Task, type TaskCategory } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 
 enum Priority {
@@ -46,15 +46,16 @@ const inputSchema = z.object({
 });
 
 const updateSchema = z.object({
-  title: z.string(),
+  title: z.string().min(3, "Title must contain at least 3 characters"),
   priority: z.enum(priorityValues),
-  description: z.string(),
-  id: z.string(),
+  description: z
+    .string()
+    .max(300, "Description exceeds maximum length of 300 characters"),
   category: z.enum(categoryValues),
+  id: z.string(),
 });
 
 const taskIdSchema = z.string();
-const userIdSchema = z.string();
 
 const markAsDoneSchema = z.object({
   id: z.string(),
@@ -180,14 +181,5 @@ export const taskRouter = createTRPCRouter({
       }
 
       return null;
-    }),
-
-  getUser: protectedProcedure
-    .input(userIdSchema)
-    .query(async ({ ctx, input }) => {
-      const user: User | null = await ctx.db.user.findUnique({
-        where: { id: input },
-      });
-      return user;
     }),
 });
