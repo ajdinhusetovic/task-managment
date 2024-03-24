@@ -10,15 +10,16 @@ datasource db {
 }
 
 model Task {
-    id          String    @id @default(uuid())
+    id          String       @id @default(uuid())
     title       String
     description String?
-    priority    Priority?
-    isDone      Boolean?  @default(false)
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
+    priority    Priority
+    category    TaskCategory @default(other)
+    isDone      Boolean?     @default(false)
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
     userId      String
-    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@index([userId])
 }
@@ -77,4 +78,14 @@ enum Priority {
     HIGH
     MEDIUM
     LOW
+}
+
+enum TaskCategory {
+    health
+    work
+    education
+    finance
+    personal
+    home
+    other
 }
