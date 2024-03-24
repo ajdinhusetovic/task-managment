@@ -118,7 +118,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           <span className={`h-5 w-5 rounded-full ${priorityColor}`}></span>
           <p className="p-1 text-lg font-medium">{task.priority} PRIORITY</p>
           <p className="ml-2 rounded-md bg-orange-400 px-2 py-1 text-lg font-semibold tracking-wide">
-            {task.category}
+            #{task.category}
           </p>
         </div>
         <div>
